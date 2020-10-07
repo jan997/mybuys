@@ -38,8 +38,8 @@ export class MUser{
     }
 
     static filter_name:IMParse = { type: String, max: 254, min: 4 };
-    static filter_password:IMParse = {type: String, max: 254, min: 6 };
-    static filter_email:IMParse = {type: String, max: 254, min: 6 };
+    static filter_password:IMParse = {type: String, max: 254, min: 8, regex: /^(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/ };
+    static filter_email:IMParse = { type: String, max: 254, min: 6 , regex: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/ };
     static filter_date_of_birth:IMParse = {type: Number };
 
     async save(){

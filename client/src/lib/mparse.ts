@@ -32,6 +32,10 @@ export interface IMParseMore{
     required?: boolean
 }
 
+export interface IMParseSetting{
+    catch: boolean
+}
+
 export type MPModelAttributes<TCreationAttributes = any> = {
     [name in keyof TCreationAttributes]: IMParse;
 }
@@ -72,10 +76,9 @@ export class MParse{
 
                 if(setting.type === String){
                     if(obj.length === 0)throw [400,`El campo '`+key+`' necesita tener contenido`];
-                    if(setting.regex && !setting.regex.exec(obj)) throw [400,`El campo '`+key+`' no es valido`]; 
+                    if(setting.regex && !setting.regex.exec(obj)) throw [400,`El campo '`+key+`' no es valido`];
                     if(setting.min !== undefined && obj.length < setting.min ) throw [400,`El '`+key+`' necesita minimo de `+setting.min+` caracteres`];
                     if(setting.max !== undefined && obj.length > setting.max ) throw [400,`El maximo de '`+key+`' es de `+setting.max+` caracteres`];
-               
                 }
     
                 if(setting.type === Number && typeof(obj) !== "number" ) throw [400,`El campo '`+key+`' necesita tener contenido`];
@@ -181,7 +184,13 @@ export class MParse{
     static more<T>(more: IMParseMore, filter: IMParse){
         return Object.assign(more,filter);
     }
-    static alone(base, value:IMParse){
-        return this.filter<any>({default: base}, {default: value}).default;
+    static alone(base:any, value:IMParse, setting?: IMParseSetting){
+        if(setting?.catch) return {parse: this.filter<any>({default: base}, {default: value}).default};
+
+        try {
+            return {parse: this.filter<any>({default: base}, {default: value}).default};
+        } catch (error) {
+            return {error: error[1]};
+        }
     }
 }

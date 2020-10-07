@@ -68,10 +68,11 @@ export class CategoryActions{
         category.public = values.public;
         category.type = values.type;
         category.user = DUser as User;
+        
         return category;
     }
 
     static async Search(Evg:IEvg, DUser:User){
-        
+
     }
 }

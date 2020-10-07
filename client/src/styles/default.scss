@@ -1,0 +1,72 @@
+// Override default variables before the import
+$body-bg: rgb(255, 238, 238);
+
+$primary: rgb(44, 170, 93);
+$primary-color: rgb(44, 170, 93);
+$primary-dark: rgb(95, 95, 95);
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+.size-10{
+    font-size: 14px ;
+}
+
+.form-group{
+    label{
+        
+    }
+    input[disabled]{
+        color: #888 !important;
+    }
+}
+
+.h-screen{
+    height:  100vh;
+}
+
+.bg-primary{
+    background-color: $primary-color !important;
+}
+
+.logo{
+    &-style{
+        &-1{
+            font-weight: 900;
+            color: lighten($color: $primary-color, $amount: 5);
+        }
+        &-2{
+            font-weight: 700;
+            color:$primary-color !important;
+            font-family: cursive;
+            transform: translate(0px,1px);
+            img{
+                transform: translate(0px,-1px);
+            }
+        }
+    }
+}
+
+.view-login{
+
+}
+.view-register{
+
+}
+.com-navbar{
+    .nav-link{
+        &.active{
+            //background-color: red !important;
+        }
+        &.custon{
+            padding: 4px 10px;
+            margin: 0px 5px;
+            font-weight: 700;
+            color: #888 !important;
+            &.active{
+                background-color: rgba($primary,  1);
+                color: #fff !important;
+            }
+        }
+    }
+}
