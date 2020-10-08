@@ -1,11 +1,18 @@
 var host = window.location.origin.includes(":3000")? "http://localhost:8989": window.location.origin;
 host = host.replace(":8989",":2052");
 
-interface IMRestSetting{
-    color?: string,
-    fast?: boolean
+export enum TypeRest{
+    POST = "post",
+    GET = "get",
+    PET = "complete"
 }
-interface IMRestResponse{
+
+export interface IMRestSetting{
+    color?: string,
+    fast?: boolean,
+    rest_catch?(error:any): any
+}
+export interface IMRestResponse{
     result: any,
     status: any,
     statusText: any,
@@ -74,14 +81,17 @@ function serialize (obj:any) {
     return str.join("&");
 }
   
-export function SettingResquest(awgwa:any,{fast = true}:IMRestSetting):Promise<TypeMRestResponse> {
+export function SettingResquest(awgwa:any,{fast = true, rest_catch}:IMRestSetting):Promise<TypeMRestResponse> {
     const {requestPath, requestOptions} = awgwa;
     if(fast){
         return new Promise((c,e)=>{        
             fetch(requestPath, requestOptions)
             .then(response => response.text())
             .then(result => c(JSON.parse(result)))
-            .catch(error => c(undefined));
+            .catch(error =>{
+                if(rest_catch) c(rest_catch(error));
+                else c(error);
+            });
         });
     }
     return new Promise((c,e)=>{        
@@ -95,7 +105,10 @@ export function SettingResquest(awgwa:any,{fast = true}:IMRestSetting):Promise<T
             };
             c(awfWAF)
         })
-        .catch(error => c(undefined));
+        .catch(error =>{
+            if(rest_catch) c(rest_catch(error));
+            else c(error);
+        });
     });
 }
   

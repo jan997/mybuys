@@ -11,29 +11,23 @@ import {
   useRouteMatch,
   useParams, Redirect
 } from "react-router-dom";
+
 import { ViewLogin } from './views/login/login';
 import { ViewRegister } from './views/register/register';
 import { View404 } from './views/other/404';
 import { ViewHome } from './views/home/home';
 import { ViewAbout } from './views/other/about';
 import { ViewPanel } from './views/panel/panel';
-import { PrivateRoute } from './components/router/PrivateRoute';
+import { PrivateRoute } from './components/router/routers';
+import { PublicRoute } from './components/router/routers';
+import { SESION } from './api/user';
+import { RemoteRun } from './lib/remoteupdate';
+import { Footer } from './components/footer/footer';
 
-// const ModelPage = ({children}:{children: React.ReactNode})=>{
-//     return (
-//       <>
-//           <header> 
-//               <NavBar/>
-//           </header>
-
-//           {children}
-
-//           <footer className="text-center text-black-50 py-3 ">
-//               MyBuy | Copyright @ 2020
-//           </footer>
-//       </>
-//     );
-// }
+(async ()=>{
+  await SESION.RESTORE();
+  //RemoteRun("routers-sleep");
+})();
 
 function App() {
   return (
@@ -43,7 +37,7 @@ function App() {
             <PrivateRoute path="/panel">
                 <ViewPanel/>
             </PrivateRoute>
-            <Route>
+            <PublicRoute>
                 <header> 
                     <NavBar/>
                 </header>
@@ -69,10 +63,8 @@ function App() {
                     </Route>
                 </Switch> 
 
-                <footer className="text-center text-black-50 py-3 ">
-                    MyBuy | Copyright @ 2020
-                </footer>
-            </Route>
+                <Footer/>
+            </PublicRoute>
         </Switch>
       </Router>
     </div>

@@ -61,6 +61,7 @@ export class BuyActions{
         mbuy.buy.date = new_buy.date;
         mbuy.buy.type = new_buy.type;
         mbuy.buy.userId = DUser.id;
+        mbuy.buy.categoryId = null;
 
         await mbuy.save();
 

@@ -37,10 +37,10 @@ export class MUser{
         else this.user = new User();
     }
 
-    static filter_name:IMParse = { type: String, max: 254, min: 4 };
+    static filter_name:IMParse = { type: String, max: 254, min: 2 };
     static filter_password:IMParse = {type: String, max: 254, min: 8, regex: /^(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/ };
     static filter_email:IMParse = { type: String, max: 254, min: 6 , regex: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/ };
-    static filter_date_of_birth:IMParse = {type: Number };
+    //static filter_date_of_birth:IMParse = {type: Number };
 
     async save(){
         try {
@@ -82,32 +82,36 @@ export class UserActions{
             name: MParse.more({required: true},MUser.filter_name),
             password: MParse.more({required: true},MUser.filter_password),
             email: MParse.more({required: true},MUser.filter_email),
-            date_of_birth: MParse.more({required: true},MUser.filter_date_of_birth)
+            //date_of_birth: MParse.more({required: true},MUser.filter_date_of_birth)
         });
 
         if( await Evg.Tmg.Users.findOne({email: new_user.email}) ) throw [400, `El correo ${new_user.email} ya tiene una cuenta asociada.`];
-
         const muser = new MUser();
         muser.user.name = new_user.name;
         muser.user.email = new_user.email;
-        muser.user.date_of_birth = new_user.date_of_birth;
+        //muser.user.date_of_birth = new_user.date_of_birth;
+        muser.user.createAt = Date.now();
         muser.setPassword({ newPassword: new_user.password });
 
         return muser;
     }
 
     static async Login(Evg:IEvg, raw_login:IUserLogin):Promise<MUser>{
-        const login_user = MParse.filter<IUserCreate>(raw_login, {
-            email: MParse.more({required: true},MUser.filter_email),
-            password: MParse.more({required: true},MUser.filter_password)
-        });
+        try {
+            const login_user = MParse.filter<IUserCreate>(raw_login, {
+                email: MParse.more({required: true},MUser.filter_email),
+                password: MParse.more({required: true},MUser.filter_password)
+            });
 
-        const user = await Evg.Tmg.Users.findOne({email: login_user.email});
-        if(!user) throw [401, "Correo o contraseña no validos"];
+            const user = await Evg.Tmg.Users.findOne({email: login_user.email});
+            if(!user) throw [401, "No existe ninguna cuenta asociada a ese correo"];
 
-        const muser = new MUser(user);
-        muser.testPassword(login_user.password,{cash: true});
+            const muser = new MUser(user);
+            muser.testPassword(login_user.password,{cash: true});
 
-        return muser;
+            return muser;
+        } catch (error) {
+            throw [401, "La cuenta o la contraseña no es incorrecta."]
+        }
     }
 }

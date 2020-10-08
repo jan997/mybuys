@@ -1,6 +1,11 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import { BuyType } from "./Buy";
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Buy, BuyType } from "./Buy";
 import { User } from "./User";
+
+export enum CategoryType {
+    In = "in",
+    Out = "out"
+}
 
 @Entity()
 export class Category extends BaseEntity {
@@ -37,11 +42,15 @@ export class Category extends BaseEntity {
     
     @Column({
         type: "enum",
-        enum: BuyType,
-        default: BuyType.Out
+        enum: CategoryType,
+        default: CategoryType.Out
     })
-    type: BuyType;
+    type: BuyType; 
 
     @Column()
     createAt: number;
+
+    @OneToMany(type => Buy, buy => buy.category)
+    buys?: Buy[];
+
 }

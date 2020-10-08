@@ -6,7 +6,7 @@ import { MParse } from "../lib/mparse";
 import { TokenActions } from "../models/token";
 import { BuyActions } from "../models/buy";
 
-interface RouterUserSearch{
+interface IBuySearch{
     skip: number,
     cound: number,
     type: string,
@@ -49,11 +49,11 @@ export function  RouterBuy(Evg: IEvg){
     });
 
 
-    router.post(`/api/buy/search`, async (req,res)=>{
+    router.get(`/api/buy/search`, async (req,res)=>{
         MRest.MSHandler(req,res,async ()=>{
             const {DUser} = await TokenActions.GetUser(Evg,req,{need: true});
 
-            const values = MParse.filter<RouterUserSearch>(req.body,{
+            const values = MParse.filter<IBuySearch>(req.body,{
                 skip: {type: Number, $default: 0, min: 0},
                 cound: {type: Number, $default: 10, min: 1, max: 64},
                 type: {type: String, enum: ["in","out"]},

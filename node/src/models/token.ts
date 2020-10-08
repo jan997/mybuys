@@ -23,13 +23,13 @@ export class TokenActions{
         const token = new Token();
         token.token = this.getNewToken();
         token.date = Date.now();
-        token.user = DUser;
+        token.userId = DUser.id;
         await token.save()
         return token;
     }
 
     static async Validate(Evg: IEvg, _token){
-        const token = await Evg.Tmg.Tokens.findOne({token: _token}, {loadRelationIds: true});
+        const token = await Evg.Tmg.Tokens.findOne({token: _token});
         if(!token) throw [401, "Token no valido"];
 
         token.date = Date.now();
@@ -43,9 +43,7 @@ export class TokenActions{
         if(!need && cookies.token == undefined) return {login: false};
 
         const token = await this.Validate(Evg, cookies.token);
-        console.log(token.user);
-
-        const DUser = await Evg.Tmg.Users.findOne(token.user, {select: select});
+        const DUser = await Evg.Tmg.Users.findOne({id: token.userId}, {select: select});
         if(!User) throw [500, "No se encontro el usuario"]
 
         return {DUser: DUser, token: token, login: true};

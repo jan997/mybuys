@@ -14,9 +14,10 @@ export function  RouterUser(Evg: IEvg){
     router.post(`/api/user/register`, async (req,res)=>{
         MRest.MSHandler(req,res,async ()=>{
             const User = await UserActions.Create(Evg, req.body);
+            await User.save();
             
             const token = await TokenActions.Create(Evg, User.get());
-            CookieActions.Create(res, token);await User.save();
+            CookieActions.Create(res, token);
 
             return MRest.Report("OK");
         });

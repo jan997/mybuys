@@ -1,5 +1,6 @@
 import { type } from "os";
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity, JoinColumn} from "typeorm";
+import { Category } from "./Category";
 
 import { User } from "./User";
 
@@ -45,10 +46,19 @@ export class Buy extends BaseEntity {
     })
     type: BuyType;
 
-    @ManyToOne(type => User, user=> user.buys)
+    @ManyToOne(type => User, user=> user.buys,{
+        cascade:true
+    })
     @JoinColumn({ name: "userId" })
     user: User
     
     @Column({ nullable: false })
     userId: number;
+    
+    @ManyToOne(type => Category, category=> category.buys)
+    @JoinColumn({ name: "categoryId" })
+    category?: Category
+    
+    @Column({nullable: true })
+    categoryId?: number;
 }

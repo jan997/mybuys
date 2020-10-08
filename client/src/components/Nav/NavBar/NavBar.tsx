@@ -20,19 +20,15 @@ export class NavBar extends React.Component<MyProps, MyState> {
                     <img src={logo} className="App-logo" alt="logo" />
                     MyBuy
                 </Link>
-
-                <div className=" navbar-collapse" id="navbarTogglerDemo02">
-                    <ul className="navbar-nav mr-auto  nav-pills">
+{/* 
+                    <ul className="nav mr-auto  nav-pills">
                         <li className="nav-item ">
                             <NavLink className="nav-link custon" exact={true} activeClassName='active' to="/">Inicio</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link custon" activeClassName='active' to="/about">Nosotros</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link custon" activeClassName='active' to="/panel">Panel</NavLink>
-                        </li>
-                    </ul>   
+                    </ul>    */}
                     <ul className="nav nav-pills">
                         <li className="nav-item">
                             <Link className="nav-link" to="/login">Iniciar sesión</Link>
@@ -41,7 +37,6 @@ export class NavBar extends React.Component<MyProps, MyState> {
                             <Link className="nav-link active font-weight-bold bg-primary" to="/register">Crear cuenta</Link>
                         </li>
                     </ul>
-                </div>
             </nav>
         </>);
     }

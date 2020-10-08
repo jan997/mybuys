@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity, OneToOne, JoinColumn} from "typeorm";
 
 import { User } from "./User";
 
@@ -16,6 +16,11 @@ export class Token extends BaseEntity{
     @Column()
     date: number;
 
-    @ManyToOne(type => User)
-    user: User
+    @ManyToOne(type => User, user => user.tokens)
+    @JoinColumn({ name: "userId" })
+    user: User;
+
+    @Column({ nullable: false })
+    userId: number;
 }
+  

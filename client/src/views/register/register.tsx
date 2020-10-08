@@ -1,10 +1,10 @@
 import { error } from "console";
-import React, { Ref, RefObject } from "react";
+import React, { FormEvent, Ref, RefObject } from "react";
 import {Link, Redirect, useHistory,} from "react-router-dom";
-import { USER_REGISTER } from "../../api/user";
+import { USER_FILTERS, USER_REGISTER } from "../../api/user";
 import { MParse } from "../../lib/mparse";
 import { RemoteRun, RemoteUpdate } from "../../lib/remoteupdate";
-import { SetTitle } from "../../utils/utlls";
+import { GetHistory, SetTitle, TypeHistory } from "../../utils/utlls";
 
 type MyProps = {
 };
@@ -16,8 +16,9 @@ type MyState = {
     complete: boolean
 };
 
+
 export class ViewRegister extends React.Component<MyProps, MyState> {
-    history: any;
+    history?: TypeHistory;
 
     ImputName = React.createRef<HTMLInputElement>();
     ImputEmail = React.createRef<HTMLInputElement>();
@@ -34,19 +35,10 @@ export class ViewRegister extends React.Component<MyProps, MyState> {
 
     componentDidMount(){
         SetTitle("Registro");
-        
-        document.querySelector("#form-register")?.addEventListener("submit",  this.CrearUsuario.bind(this));
     }
 
-    GetValues(){
-        const Values = {
-
-        }
-    }
-
-    async CrearUsuario(e:Event){
-
-        e.preventDefault();
+    async CrearUsuario(event:FormEvent<HTMLFormElement>){
+        event.preventDefault();
         this.setState({sleep: true, message_error: undefined});
 
         const {error} = await USER_REGISTER({
@@ -55,33 +47,28 @@ export class ViewRegister extends React.Component<MyProps, MyState> {
             email: this.ImputEmail.current?.value||"",
             password: this.ImputPassword.current?.value||""
         });
+
         if(error) this.setState({sleep: false, message_error: error});
         else {
             this.setState({complete: true});
-            this.history.push("/panel");
+            this.history?.push("/panel");
         }
     }
 
-    GetHistory({_this}:{_this:ViewRegister}){
-        _this.history = useHistory();
-        console.log(_this.history);
-        return null;
-    }
 
     render() {
-        const {GetHistory} = this;
         return (<>
-            <GetHistory _this={this}/>
+            <GetHistory to={h => this.history = h}/>
             <div className="container view-register">
 
                 <div className="row">
                     <div className="col-12 col-sm-9 col-lg-5 mx-auto">
 
-                        <form id="form-register" className="bg-white shadow rounded py-3 pb-4 px-4 ">
+                        <form id="form-register" className="bg-white shadow rounded py-3 pb-4 px-4 " onSubmit={this.CrearUsuario.bind(this)}>
                             <div>
                                 <h1 className="display-4 text-center py-4 logo-style-1">Registro</h1>
                             </div>
-                            {!this.state.message_error?null:
+                            {!this.state.message_error?(null):
                                 <div className="alert alert-danger" role="alert">
                                    {this.state.message_error}
                                 </div>
@@ -99,11 +86,11 @@ export class ViewRegister extends React.Component<MyProps, MyState> {
                                     className="form-control bg-light shadow-sm border-0" 
                                     onBlur={({currentTarget})=>{
                                         const {value, classList} = currentTarget;
-                                        const {error, parse} = MParse.alone(value,{ type: String, max: 254, min: 4 },{catch: false});
+                                        const {error, parse} = MParse.alone(value, USER_FILTERS.filter_name,{catch: false});
                                         if(!parse){
                                             classList.add("is-invalid");
                                             classList.remove("border-0");
-                                            RemoteRun("register-form-name-error", {message: "El nombre necesita tener mas de 4 caracteres."});
+                                            RemoteRun("register-form-name-error", {message: "El nombre necesita tener mas de 2 caracteres."});
                                         }else{
                                             classList.remove("is-invalid");
                                             classList.add("border-0");
@@ -130,7 +117,7 @@ export class ViewRegister extends React.Component<MyProps, MyState> {
                                     className="form-control bg-light shadow-sm border-0 fis-invalid" 
                                     onBlur={({currentTarget})=>{
                                         const {value, classList} = currentTarget;
-                                        const {error, parse} = MParse.alone(value,{ type: String, min: 6 , max: 254, regex: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/ },{catch: false});
+                                        const {error, parse} = MParse.alone(value, USER_FILTERS.filter_email,{catch: false});
                                         if(!parse){
                                             classList.add("is-invalid");
                                             classList.remove("border-0");
@@ -161,7 +148,7 @@ export class ViewRegister extends React.Component<MyProps, MyState> {
                                     className="form-control bg-light shadow-sm border-0 fis-invalid"
                                     onBlur={({currentTarget})=>{
                                         const {value, classList} = currentTarget;
-                                        const {error, parse} = MParse.alone(value, {type: String, max: 254, min: 8, regex: /^(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/ },{catch: false});
+                                        const {error, parse} = MParse.alone(value, USER_FILTERS.filter_password, {catch: false});
                                         if(!parse){
                                             classList.add("is-invalid");
                                             classList.remove("border-0");
@@ -216,7 +203,7 @@ export class ViewRegister extends React.Component<MyProps, MyState> {
                                 <label className="custom-control-label text-info" htmlFor="same-address">He leído y acepto los <Link to="/terms">Términos y condiciones</Link> de uso.</label>
                             </div>
                             
-                            <button className="btn btn-primary btn-lg btn-block mt-4" disabled={!this.state.check || this.state.complete} type="submit">Crear cuenta</button>
+                            <button className="btn btn-primary btn-lg btn-block mt-4" disabled={!this.state.check || this.state.complete} type="submit" >Crear cuenta</button>
                         </form>
                     </div>
                 </div>

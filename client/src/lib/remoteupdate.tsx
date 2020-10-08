@@ -17,8 +17,6 @@ export function RemoteRun(key:string, ...awf:any){
         const args = [];
         const _args = [...arguments as any];
 
-        console.log(_args);
-
         for (let index = 1; index < _args.length; index++) {
             args.push(_args[index]);
         }
@@ -81,7 +79,7 @@ export class RemoteUpdate extends React.Component<MyProps, MyState> {
             return children;
         }
         const {parse} = this;
-        console.log(parse);
+
         return content(...parse);
     }
 }
