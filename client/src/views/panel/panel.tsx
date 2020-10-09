@@ -9,12 +9,12 @@ import {
     useParams, Redirect
   } from "react-router-dom";
 import { Footer } from "../../components/footer/footer";
-import { ViewPanelHome } from "../../components/panel/home";
-
+import { ViewPanelHome } from "./home/home";
   
 import { PanelNavBar } from "../../components/panel/nav/navbar";
 import { PrivateRoute } from "../../components/router/routers";
 import { SetTitle } from "../../utils/utlls";
+import { ViewPanelCreate } from "./create/create";
 
 
 type MyProps = {
@@ -27,10 +27,6 @@ export class ViewPanel extends React.Component<MyProps, MyState> {
     state: MyState = {
 
     };
-
-    componentDidMount(){
-        SetTitle("Inicio");
-    }
     
     render() {
         return (<>
@@ -38,10 +34,19 @@ export class ViewPanel extends React.Component<MyProps, MyState> {
                 <PanelNavBar/>
             </header>
 
-            <div className="view-panel">
+            <div className="view-panel flex-basis-auto">
                 <Switch>
-                    <PrivateRoute path="/panel">
+                    <PrivateRoute path="/panel/add">
+                        <ViewPanelCreate/>
+                    </PrivateRoute>
+                    <PrivateRoute path="/panel/edit">
+                        <ViewPanelCreate/>
+                    </PrivateRoute>
+                    <PrivateRoute path="/panel" exact={true}>
                         <ViewPanelHome/>
+                    </PrivateRoute>
+                    <PrivateRoute>
+                        <Redirect to="/panel"/>
                     </PrivateRoute>
                 </Switch>
             </div>

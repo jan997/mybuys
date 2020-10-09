@@ -1,5 +1,6 @@
 import React from "react";
 import {Link, NavLink} from "react-router-dom";
+import { SVG_Logo2 } from "../../../resources/icons";
 import logo from "../../../resources/vertors/logo.svg";
 
 type MyProps = {
@@ -15,9 +16,9 @@ export class NavBar extends React.Component<MyProps, MyState> {
 
     render() {
         return (<>
-            <nav className="com-navbar navbar navbar-expand-lg">
+            <nav className="com-navbar navbar ">
                 <Link className="navbar-brand logo-style-2" to="/">
-                    <img src={logo} className="App-logo" alt="logo" />
+                    <SVG_Logo2 className="app-logo" size={32}/>
                     MyBuy
                 </Link>
 {/* 

@@ -36,8 +36,10 @@ export class Buy extends BaseEntity {
     @Column({})
     amount: number;
 
-    @Column()
-    date: number;
+    @Column({
+        type: "datetime"
+    })
+    date: Date;
 
     @Column({
         type: "enum",

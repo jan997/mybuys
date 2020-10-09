@@ -35,7 +35,10 @@ export class USER_FILTERS{
     static filter_email:IMParse = { type: String, max: 254, min: 6 , regex: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/ };
     //static filter_date_of_birth:IMParse = {type: Number };
 }
-
+export enum ListMode{
+    List = "list",
+    Details = "details"
+}
 const STORAGE ={
     Authenticate(){
         localStorage.last_login = Date.now();
@@ -45,6 +48,19 @@ const STORAGE ={
     },
     FindLastLogin(){
         return localStorage.getItem("last_login")
+    },
+
+    get ListMode():ListMode{
+        return localStorage.getItem("listmode") === ListMode.List?ListMode.List:ListMode.Details;
+    },
+    ToggleListMode(){
+        localStorage.listmode = localStorage.getItem("listmode") !== ListMode.List?ListMode.List:ListMode.Details
+    },
+    get ValueOld():number{
+        return "oldvalue" in localStorage? parseInt(localStorage.oldvalue):10;
+    },
+    SetValueOld(value:number){
+        localStorage.oldvalue = value;
     }
 }
 
@@ -63,7 +79,7 @@ class _SESION{
     }
 
     get isAuthenticated(){
-        return this._IsLogin;
+        return this._IsLogin?true:false;
     }
 
     get User(){
@@ -84,7 +100,7 @@ class _SESION{
     SignOut(){
         this.RESET();
         STORAGE.SignOut();
-        RemoteRun("routers-sleep");
+        RemoteRun("App");
     }
 
     async RESTORE(){

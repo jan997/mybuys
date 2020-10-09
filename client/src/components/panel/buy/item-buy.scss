@@ -1,3 +1,83 @@
+
 .item-buy{
+    transition: opacity 150ms;
+    border-top: 1px solid lighten($color: $primary-dark, $amount: 50);
+    &:hover{
+        background: rgba($color: $primary, $alpha: 0.13);
+    }
+    &-concept{
+        font-size: 18px;
+        color: $primary-dark;
+        // flex-wrap: wrap;
+        // white-space: nowrap;
+        // overflow: scroll;
+        // width: 30vw;;
+        overflow-wrap: anywhere;
+        
+    }
+    &-amount{
+        font-size: 18px;
+        color: $primary-dark;
+         .item-buy.out &{
+            color: $primary-out !important;
+        }
+        .item-buy.in &{
+            color: $primary-color !important;
+        }
+    }
+    &-category{
+        font-size: 15px;
+        color: $primary-dark;
+    }
+    &.out .category-icon{
+        border-color: lighten($color: $primary-out, $amount: 5) !important;
+    }
+    &.in .category-icon{
+        border-color: lighten($color: $primary-color, $amount: 15) !important;
+    }
+    &-date{
+        color: lighten($color: $primary-dark, $amount: 10);
+    }
+    &-option{
+        .fill{
+            fill: lighten($color: $primary-dark, $amount: 20);
+        } 
+        &.delete{
+            svg{
+                @include OverEffect();
+                //padding: 10px;
+            }
+        }
+    }
     
+    &.small{
+        // max-height: 60px;
+        // overflow: hidden;
+        .category-icon{
+            width: 24px;
+            height: 24px;
+            img{
+                width: 20px;
+                height: 20px;
+            }
+        }
+        @at-root .item-buy-category{
+            transform: translate(0px, 1px);
+            display: block;
+            .item-buy.out &{
+               color: $primary-out !important;
+            }
+            .item-buy.in &{
+                color: $primary-color !important;
+            }
+        }
+        @at-root .item-buy-date{
+            transform: translate(0px, 4px);
+            display: block;
+        }
+        @at-root .item-buy-concept{
+            transform: translate(0px, -1px);
+            display: block;
+        }
+    }
 }

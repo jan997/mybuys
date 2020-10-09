@@ -22,21 +22,21 @@ interface ICategoryCreate{
 }
 
 const DefaultCategories:ICategoryCreate[] = [
-    {name: "Comida", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Transporte", color: "FFFFFF", icon: "transport", type: BuyType.Out},
-    {name: "Cine", color: "FFFFFF", icon: "cinema", type: BuyType.Out},
-    {name: "Gignacio", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Electronica", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Colegio", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Fotocopias", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Telefono", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Internet", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Eventos", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Deportes", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Medicina", color: "FFFFFF", icon: "food", type: BuyType.Out},
-    {name: "Trabajo", color: "FFFFFF", icon: "food", type: BuyType.In},
-    {name: "Amigos", color: "FFFFFF", icon: "food", type: BuyType.In},
-    {name: "Familia", color: "FFFFFF", icon: "food", type: BuyType.In},
+    {name: "Comida", color: "#d48248", icon: "food", type: BuyType.Out},
+    {name: "Transporte", color: "#ffc759", icon: "transport", type: BuyType.Out},
+    {name: "Cine", color: "#b2f4ff", icon: "movies", type: BuyType.Out},
+    {name: "Gimnasio", color: "#a8bcd8", icon: "gym", type: BuyType.Out},
+    {name: "Electronica", color: "#ec8686", icon: "electronics", type: BuyType.Out},
+    {name: "Colegio", color: "#bad2bc", icon: "school", type: BuyType.Out},
+    {name: "Fotocopias", color: "#e6e7ed", icon: "photocopies", type: BuyType.Out},
+    {name: "Teléfono", color: "#ffc9e8", icon: "teléfono", type: BuyType.Out},
+    {name: "Internet", color: "#5acece", icon: "internet", type: BuyType.Out},
+    {name: "Eventos", color: "#ffd86b", icon: "events", type: BuyType.Out},
+    {name: "Deportes", color: "#b8e4ff", icon: "sports", type: BuyType.Out},
+    {name: "Medicina", color: "#0aad78", icon: "medicine", type: BuyType.Out},
+    {name: "Trabajo", color: "#54a7d0", icon: "job", type: BuyType.In},
+    {name: "Amigos", color: "#4fdcb1", icon: "friends", type: BuyType.In},
+    {name: "Familia", color: "#93cdff", icon: "family", type: BuyType.In},
 ];
 
 export class CategoryActions{

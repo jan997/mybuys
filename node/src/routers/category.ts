@@ -21,7 +21,7 @@ export function  RouterCategory(Evg: IEvg){
         MRest.MSHandler(req,res,async ()=>{
             const {DUser} = await TokenActions.GetUser(Evg,req,{need: true});
 
-            const values = MParse.filter<RouterCategorySearch>(req.body,{
+            const values = MParse.filter<RouterCategorySearch>(req.query,{
                 skip: {type: Number, $default: 0, min: 0},
                 cound: {type: Number, $default: 10, min: 1, max: 64},
                 type: {type: String, enum: ["in","out"]},

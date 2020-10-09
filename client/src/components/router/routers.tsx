@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, RouteProps } from "react-router-dom";
 import { SESION } from "../../api/user";
 import { RemoteUpdate } from "../../lib/remoteupdate";
 import { TypeProps } from "../../utils/utlls";
@@ -9,7 +9,6 @@ function SleepRoute(props: {} & TypeProps){
     return (
         <RemoteUpdate _key="routers-sleep" content={()=>{
             const SleepValid = SESION.isSesion && !SESION.isAuthenticated;
-            
             if(SleepValid){
                 return (<>
                     <header></header>
@@ -24,7 +23,7 @@ function SleepRoute(props: {} & TypeProps){
     );
 }
 
-export function PublicRoute({ children, ...rest }:any) {
+export function PublicRoute({ children, ...rest }: RouteProps& TypeProps) {
     return (
         <SleepRoute>
             <Route
@@ -48,7 +47,7 @@ export function PublicRoute({ children, ...rest }:any) {
 
 
 
-export function PrivateRoute({ children, ...rest }:any) {
+export function PrivateRoute({ children, ...rest }: RouteProps & TypeProps) {
 
     return (
         <SleepRoute>

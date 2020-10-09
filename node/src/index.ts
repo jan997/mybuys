@@ -53,7 +53,7 @@ MRest.debug = DebugMode;
 
     console.log("");
 
-    console.log("Escuchando...");
+    console.log("Escuchando a los puertos 8989, 8888, 2052.");
     console.log("");
     Evg.App.listen(8989);
     Evg.App.listen(8888);
