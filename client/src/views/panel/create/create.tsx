@@ -228,7 +228,6 @@ export class ViewPanelCreate extends React.Component<MyProps, MyState> {
                                                     ))}/>
                                                 </div>
                                             ))()}
-                                            {console.log(formik.values)}
                                             <InputCategory OnChange={(ic)=>{formik.values.categoryId = ic.categoryId}} value={formik.values.categoryId}/>
                                     </div>
 

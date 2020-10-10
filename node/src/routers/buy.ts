@@ -19,7 +19,6 @@ export function  RouterBuy(Evg: IEvg){
     router.post(`/api/buy/create`, async (req,res)=>{
         MRest.MSHandler(req,res,async ()=>{
             const {DUser} = await TokenActions.GetUser(Evg,req,{need: true});
-            console.log(DUser);
             const mbuy = await BuyActions.Create(Evg, DUser, req.body);
 
             await mbuy.save();
@@ -55,8 +54,6 @@ export function  RouterBuy(Evg: IEvg){
 
             const buy = await Evg.Tmg.Buys.findOne({id: values.buyId},{select: ["id","userId"]});
             if(!buy) throw [400, "El elemento no existe"];
-            console.log("Buy ",buy);
-
             if(DUser.id !== buy.userId) throw [401, "No tienes permiso para eso"];   
 
             await buy.remove();
@@ -75,7 +72,6 @@ export function  RouterBuy(Evg: IEvg){
 
             const buy = await Evg.Tmg.Buys.findOne({id: values.buyId});
             if(!buy) throw [400, "El elemento no existe"];
-            console.log("Buy ",buy);
 
             if(DUser.id !== buy.userId) throw [401, "No tienes permiso para eso"];   
             
@@ -102,7 +98,7 @@ export function  RouterBuy(Evg: IEvg){
             if(values.category) _where_.categoryId = values.category;
 
             const obj = await Evg.Tmg.Buys.query("SELECT SUM(amount) as 'sum' FROM `database`.buy WHERE userId = "+DUser.id+" ");
-            
+
             const sum = obj[0].sum;
             
             // const list  = await Evg.Tmg.Buys.createQueryBuilder("buy")

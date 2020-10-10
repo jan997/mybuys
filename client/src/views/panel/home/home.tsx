@@ -61,7 +61,6 @@ export class ViewPanelHome extends React.Component<MyProps, MyState> {
                             <div className="col-4">
                                 <RemoteUpdate sleep={true} _key="sum" content={(com)=>{
                                     const amount = `${com<0? "- ":""}$${formatNumber(com>1?com:com*-1)}`;
-                                    console.log(com);
                                     return(
                                         <BoxCenter size={BoxSize.Mediano} backgraund={false} padding={false} className={`sum ${com>0?"positive":(com<0?"negative":"")}`}> 
                                             <span className="">{`${com===null?"$0":amount}`}</span> 

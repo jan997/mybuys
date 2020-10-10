@@ -5,8 +5,6 @@ import { IMParse, MParse } from "../lib/mparse";
 import { MFilters } from "./user";
 import moment = require("moment");
 
-console.log(Date.now());
-
 export class MBuy{
     buy: Buy;
     isNew: boolean = true;
@@ -95,8 +93,6 @@ export class BuyActions{
         mbuy.buy.type = new_buy.type;
         mbuy.buy.userId = DUser.id;
         mbuy.setCategory(new_buy.categoryId);
-
-        console.log(mbuy);
 
         await mbuy.save();
 

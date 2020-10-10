@@ -53,10 +53,17 @@ MRest.debug = DebugMode;
 
     console.log("");
 
-    console.log("Escuchando a los puertos 8989, 8888, 2052.");
+    console.log("Escuchando...");
     console.log("");
-    Evg.App.listen(8989);
-    Evg.App.listen(8888);
+    console.log(" # http://localhost:2052/");
+    // console.log("");
+    // console.log(" # http://localhost:8888/");
+    // console.log("");
+    // console.log(" # http://localhost:8989/");
+    console.log("");
+    console.log("");
+    // Evg.App.listen(8989);
+    // Evg.App.listen(8888);
     Evg.App.listen(2052);
 })();
 

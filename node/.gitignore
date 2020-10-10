@@ -2,6 +2,7 @@
 .vscode/
 node_modules/
 build/
+client/
 tmp/
 temp/
 Commit.ps1

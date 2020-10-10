@@ -1,19 +1,38 @@
+$host.ui.rawui.windowtitle="TabBuild"
 
-pause
-Remove-Item /node/build –recurse
-pause
 cd "node"
-pause
-tsc --build
-pause
+
+write "###############################################"
+write "Borrando old build"
+write "###############################################"
+Remove-Item client –recurse
+
+write " "
+
+#write "Nuva build"
+#tsc --build
+
 cd ..
-pause
+
 cd "client"
-pause
+
+write "###############################################"
+write "Nueva build del cliente"
+write "###############################################"
 npm run-script build
-pause
-move build ../node/build/client
+
+write "###############################################"
+write "La momemos a la build del servidor"
+write "###############################################"
+move build ../node/client
+
 cd ..
+
 cd "node"
-node build/index.js
+
+write "###############################################"
+write "Iniciamos el servidor"
+write "###############################################"
+npm start
 pause
+

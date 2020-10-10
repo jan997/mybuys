@@ -9,6 +9,7 @@ import {Category} from "../entity/Category";
 
 import { InitTmg } from "../database/db";
 
+var path = require('path');
 
 
 export interface IEvg{
@@ -34,5 +35,9 @@ const InitEvg = async ()=>{
 };
 
 Evg.App.use(express.json()); 
+const __dirnode = __dirname.replace(`\\src\\app`,"");
+console.log(__dirnode);
+Evg.App.use(express.static(__dirnode +'/client/'));
+Evg.App.get(/^(?:(?!\/api\/).)*$/, (req,res) => res.sendFile(path.join(__dirnode+'/client/index.html') ));
 
 export {Evg, InitEvg};

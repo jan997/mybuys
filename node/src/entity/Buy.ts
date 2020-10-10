@@ -1,4 +1,3 @@
-import { type } from "os";
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity, JoinColumn} from "typeorm";
 import { Category } from "./Category";
 
