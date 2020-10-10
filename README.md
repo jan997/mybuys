@@ -1,5 +1,3 @@
-# mybuys
-Challenge Javascript - Alkemy
 # Challenge Javascript - ALKEMY 
 
 Pasos para lograr hacer andar esto
